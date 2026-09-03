@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vaishnavi Hidadugi — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EEEEE6;
+    --paper-2:#E7E7DC;
+    --ink:#1B1F1C;
+    --ink-soft:#4A4F49;
+    --signal:#2F55E3;
+    --moss:#4F7B5E;
+    --line:#CFCFC0;
+    --white:#FBFBF7;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{background:var(--signal); color:var(--white);}
+
+  a{color:inherit;}
+
+  .wrap{
+    max-width:1040px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* faint graph-paper texture behind everything */
+  .grid-bg{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    background-image:
+      linear-gradient(var(--paper-2) 1px, transparent 1px),
+      linear-gradient(90deg, var(--paper-2) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:0.5;
+  }
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky; top:0; z-index:10;
+    background:rgba(238,238,230,0.88);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .nav-mark{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:14px;
+    letter-spacing:0.02em;
+  }
+  .nav-links{
+    display:flex; gap:28px;
+    font-size:14px;
+    list-style:none; margin:0; padding:0;
+  }
+  .nav-links a{
+    text-decoration:none;
+    color:var(--ink-soft);
+    border-bottom:1px solid transparent;
+    padding-bottom:2px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .nav-links a:hover{ color:var(--ink); border-color:var(--signal); }
+
+  /* ---------- hero ---------- */
+  header.hero{
+    padding:96px 0 72px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-kicker{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--moss);
+    margin:0 0 18px;
+  }
+  .hero-kicker::before{content:"◆ ";}
+  h1.hero-name{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(48px, 8vw, 92px);
+    line-height:0.98;
+    margin:0 0 20px;
+    letter-spacing:-0.01em;
+    max-width:11ch;
+  }
+  .hero-role{
+    font-size:19px;
+    color:var(--ink-soft);
+    max-width:52ch;
+    margin:0 0 36px;
+  }
+  .hero-meta{
+    display:flex; flex-wrap:wrap; gap:24px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .hero-meta a{ text-decoration:none; border-bottom:1px solid var(--line); }
+  .hero-meta a:hover{ border-color:var(--signal); color:var(--signal); }
+
+  /* ---------- section label ---------- */
+  .section{ padding:72px 0; border-bottom:1px solid var(--line); }
+  .section-head{
+    display:grid;
+    grid-template-columns:200px 1fr;
+    gap:32px;
+    margin-bottom:40px;
+  }
+  .section-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--moss);
+    padding-top:4px;
+  }
+  .section-title{
+    font-family:'Fraunces', serif;
+    font-size:34px;
+    font-weight:500;
+    margin:0;
+    max-width:20ch;
+  }
+  @media (max-width:720px){
+    .section-head{ grid-template-columns:1fr; gap:8px; }
+  }
+
+  .section-body{
+    display:grid;
+    grid-template-columns:200px 1fr;
+    gap:32px;
+  }
+  @media (max-width:720px){
+    .section-body{ grid-template-columns:1fr; }
+  }
+  /* ---------- about ---------- */
+  .about-text{
+    font-size:18px;
+    max-width:62ch;
+    color:var(--ink);
+  }
+  .about-text p{ margin:0 0 18px; }
+  .about-text p:last-child{ margin-bottom:0; }
+
+  /* ---------- experience timeline ---------- */
+  .timeline{ max-width:70ch; }
+  .job{
+    display:grid;
+    grid-template-columns:140px 1fr;
+    gap:24px;
+    padding:24px 0;
+    border-top:1px solid var(--line);
+  }
+  .job:first-child{ border-top:none; padding-top:0; }
+  @media (max-width:600px){
+    .job{ grid-template-columns:1fr; gap:6px; }
+  }
+  .job-date{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    padding-top:3px;
+  }
+  .job-role{
+    font-family:'Fraunces', serif;
+    font-size:20px;
+    font-weight:500;
+    margin:0 0 4px;
+  }
+  .job-org{
+    font-size:14px;
+    color:var(--moss);
+    margin:0 0 12px;
+    font-weight:500;
+  }
+  .job ul{
+    margin:0; padding-left:18px;
+    font-size:15px;
+    color:var(--ink-soft);
+  }
+  .job li{ margin-bottom:6px; }
+  .job li:last-child{ margin-bottom:0; }
+
+  /* ---------- projects ---------- */
+  .projects{ max-width:760px; display:flex; flex-direction:column; }
+  .project{
+    padding:28px 0;
+    border-top:1px solid var(--line);
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+  .project:first-child{ border-top:none; padding-top:0; }
+  .project-top{
+    display:flex; justify-content:space-between; align-items:baseline;
+    gap:16px; flex-wrap:wrap;
+  }
+  .project-name{
+    font-family:'Fraunces', serif;
+    font-size:22px;
+    font-weight:500;
+    margin:0;
+  }
+  .project-stack{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--signal);
+    text-align:right;
+  }
+  .project-desc{
+    font-size:15px;
+    color:var(--ink-soft);
+    max-width:64ch;
+    margin:0;
+  }
+  .project-desc li{ margin-bottom:4px; }
+  .project-desc ul{ margin:6px 0 0; padding-left:18px; }
+
+  /* ---------- skills ---------- */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:28px 40px;
+    max-width:760px;
+  }
+  @media (max-width:600px){
+    .skills-grid{ grid-template-columns:1fr; }
+  }
+  .skill-cat h4{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    text-transform:none;
+    color:var(--moss);
+    margin:0 0 10px;
+    font-weight:500;
+  }
+  .skill-cat p{
+    margin:0; font-size:15px; color:var(--ink);
+    line-height:1.7;
+  }
+
+  /* ---------- certifications (card grid) ---------- */
+  .cert-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:18px;
+    max-width:760px;
+  }
+  @media (max-width:600px){
+    .cert-grid{ grid-template-columns:1fr; }
+  }
+  .cert-card{
+    position:relative;
+    background:var(--white);
+    border:1px solid var(--line);
+    padding:22px 20px 18px;
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .55s cubic-bezier(.2,.7,.2,1), transform .55s cubic-bezier(.2,.7,.2,1), border-color .2s ease;
+  }
+  .cert-grid.in-view .cert-card{ opacity:1; transform:translateY(0); }
+  .cert-grid.in-view .cert-card:nth-child(1){ transition-delay:.02s; }
+  .cert-grid.in-view .cert-card:nth-child(2){ transition-delay:.08s; }
+  .cert-grid.in-view .cert-card:nth-child(3){ transition-delay:.14s; }
+  .cert-grid.in-view .cert-card:nth-child(4){ transition-delay:.2s; }
+  .cert-grid.in-view .cert-card:nth-child(5){ transition-delay:.26s; }
+  .cert-card:hover{ border-color:var(--moss); }
+  .cert-card::before{
+    /* perforated edge along the bottom, like a certificate stub */
+    content:"";
+    position:absolute; left:0; right:0; bottom:-1px;
+    height:1px;
+    background-image:repeating-linear-gradient(90deg, var(--line) 0 6px, transparent 6px 12px);
+  }
+  .cert-seal{
+    position:absolute; top:18px; right:18px;
+    width:10px; height:10px;
+    border-radius:50%;
+    background:var(--moss);
+  }
+  .cert-id{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    margin:0 0 14px;
+    letter-spacing:0.02em;
+  }
+  .cert-name{
+    font-family:'Fraunces', serif;
+    font-size:17px;
+    font-weight:500;
+    margin:0 0 6px;
+    padding-right:20px;
+    line-height:1.3;
+  }
+  .cert-issuer{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    margin:0;
+  }
+
+  /* ---------- achievements ---------- */
+  .achieve-list{ max-width:70ch; display:flex; flex-direction:column;}
+  .achieve{
+    display:grid;
+    grid-template-columns:90px 1fr;
+    gap:24px;
+    padding:18px 0;
+    border-top:1px solid var(--line);
+  }
+  .achieve:first-child{ border-top:none; padding-top:0; }
+  @media (max-width:600px){
+    .achieve{ grid-template-columns:1fr; gap:4px; }
+  }
+  .achieve-year{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+  .achieve-title{ font-weight:600; margin:0 0 2px; font-size:15.5px; }
+  .achieve-detail{ margin:0; font-size:14.5px; color:var(--ink-soft); }
+
+  /* ---------- education ---------- */
+  .edu-list{ max-width:70ch; }
+  .edu{
+    display:grid;
+    grid-template-columns:140px 1fr;
+    gap:24px;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+  }
+  .edu:first-child{ border-top:none; padding-top:0; }
+  @media (max-width:600px){
+    .edu{ grid-template-columns:1fr; gap:4px; }
+  }
+  .edu-date{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--ink-soft); }
+  .edu-name{ font-weight:600; font-size:15.5px; margin:0 0 3px; }
+  .edu-detail{ margin:0; font-size:14.5px; color:var(--ink-soft); }
+
+  /* ---------- footer / contact ---------- */
+  footer{ padding:80px 0 56px; }
+  .footer-title{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(30px, 5vw, 46px);
+    margin:0 0 32px;
+    max-width:16ch;
+  }
+  .footer-links{
+    display:flex; flex-wrap:wrap; gap:14px 28px;
+    margin-bottom:56px;
+  }
+  .footer-links a{
+    text-decoration:none;
+    font-size:15px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:2px;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .footer-links a:hover{ border-color:var(--signal); color:var(--signal); }
+  .footer-bottom{
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    padding-top:24px;
+    border-top:1px solid var(--line);
+  }
+
+  /* ---------- scroll reveal ---------- */
+  .section-label, .section-title{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
+  }
+  .section-title{ transition-delay:.08s; }
+  .section-head.in-view .section-label,
+  .section-head.in-view .section-title{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  .job, .project, .achieve, .edu, .about-text{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .job.in-view, .project.in-view, .achieve.in-view, .edu.in-view, .about-text.in-view{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  .skills-grid .skill-cat{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .55s cubic-bezier(.2,.7,.2,1), transform .55s cubic-bezier(.2,.7,.2,1);
+  }
+  .skills-grid.in-view .skill-cat{
+    opacity:1;
+    transform:translateY(0);
+  }
+  .skills-grid.in-view .skill-cat:nth-child(1){ transition-delay:.02s; }
+  .skills-grid.in-view .skill-cat:nth-child(2){ transition-delay:.08s; }
+  .skills-grid.in-view .skill-cat:nth-child(3){ transition-delay:.14s; }
+  .skills-grid.in-view .skill-cat:nth-child(4){ transition-delay:.2s; }
+  .skills-grid.in-view .skill-cat:nth-child(5){ transition-delay:.26s; }
+  .skills-grid.in-view .skill-cat:nth-child(6){ transition-delay:.32s; }
+  .skills-grid.in-view .skill-cat:nth-child(7){ transition-delay:.38s; }
+
+  .footer-title{
+    opacity:0;
+    transform:translateY(16px);
+    transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
+  }
+  .footer-title.in-view{ opacity:1; transform:translateY(0); }
+
+  /* hero: one deliberate load-in sequence, not a scroll trigger */
+  .hero-kicker, .hero-name, .hero-role, .hero-meta{
+    opacity:0;
+    transform:translateY(16px);
+    animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  .hero-kicker{ animation-delay:.05s; }
+  .hero-name{ animation-delay:.15s; }
+  .hero-role{ animation-delay:.32s; }
+  .hero-meta{ animation-delay:.46s; }
+  @keyframes rise{
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .section-label, .section-title, .job, .project, .achieve, .edu,
+    .about-text, .skills-grid .skill-cat, .footer-title,
+    .hero-kicker, .hero-name, .hero-role, .hero-meta{
+      opacity:1 !important;
+      transform:none !important;
+      animation:none !important;
+      transition:none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<nav>
+  <div class="wrap">
+    <span class="nav-mark">VH / 2026</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="hero-kicker">Belgaum, Karnataka — CSBS, 7th semester</p>
+    <h1 class="hero-name">Vaishnavi<br>Hidadugi</h1>
+    <p class="hero-role">I build small, working AI and data systems — dashboards that explain themselves, models that hold up on real data, and hackathon prototypes that ship in a weekend. Currently studying Computer Science &amp; Business Systems at SGBIT, CGPA 8.56.</p>
+    <div class="hero-meta">
+      <a href="mailto:vaishnavihidadugi@gmail.com">vaishnavihidadugi@gmail.com</a>
+      <a href="tel:7483235284">7483235284</a>
+      <a href="https://linkedin.com/in/vaishnavi-hidadugi-4771b72a7" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/vaishnavihidadugi" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</header>
+
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-label">01 — About</span>
+      <h2 class="section-title">Data, made legible</h2>
+    </div>
+    <div class="section-body">
+      <div></div>
+      <div class="about-text">
+        <p>I'm drawn to the point where messy real-world data turns into something a person can actually act on — a dashboard, a forecast, a working demo. Across four internships and four national-level hackathons, that's been the throughline: take a dataset or a rough idea, and get it to a usable, explainable result under a deadline.</p>
+        <p>I work mainly in Python and SQL, lean on Pandas and Scikit-learn for analysis, and use Power BI and Streamlit to put results in front of people who aren't going to read the notebook. Outside of coursework, I've led HR &amp; Team Affairs for SGBIT's ED Cell and represented teams at national hackathons — so I'm as comfortable presenting a result as building it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="experience">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-label">02 — Experience</span>
+      <h2 class="section-title">Five internships, five different problems</h2>
+    </div>
+    <div class="section-body">
+      <div></div>
+      <div class="timeline">
+
+        <div class="job">
+          <div class="job-date">Feb – May<br>2026</div>
+          <div>
+            <p class="job-role">Data Analyst Intern</p>
+            <p class="job-org">iFutureTech, Belagavi</p>
+            <ul>
+              <li>Completed a 3-month data analytics internship focused on Power BI and Advanced Excel.</li>
+              <li>Built dashboards on real-world datasets — cleaning, analysis, and visualization end to end.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="job">
+          <div class="job-date">Jul – Aug<br>2025</div>
+          <div>
+            <p class="job-role">Web Development</p>
+            <p class="job-org">Ultimez Technology</p>
+            <ul>
+              <li>Built an interactive Consumer Insights Dashboard for e-commerce data.</li>
+              <li>Handled data cleaning, exploratory analysis, and transformation on the underlying datasets.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="job">
+          <div class="job-date">Jun<br>2025</div>
+          <div>
+            <p class="job-role">Data Science <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-soft);">(with letter of recommendation)</span></p>
+            <p class="job-org">SkillCraft Technology</p>
+            <ul>
+              <li>Visualized population data through bar charts and histograms.</li>
+              <li>Ran data cleaning and EDA on the Titanic dataset, and built a Decision Tree Classifier on bank marketing data.</li>
+              <li>Analyzed US accident data to surface patterns and hotspots.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="job">
+          <div class="job-date">May – Jun<br>2025</div>
+          <div>
+            <p class="job-role">Data Science</p>
+            <p class="job-org">Cognifyz Technologies</p>
+            <ul>
+              <li>Built regression models to predict restaurant ratings from feature-engineered data.</li>
+              <li>Completed three task levels including geospatial analysis and customer-preference modeling, using Python, Pandas, Scikit-learn, Matplotlib, and Seaborn.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="job">
+          <div class="job-date">May<br>2025</div>
+          <div>
+            <p class="job-role">Web Development</p>
+            <p class="job-org">Cognifyz Technologies</p>
+            <ul>
+              <li>Built responsive webpages with HTML, CSS, JavaScript, and Bootstrap, including an internship-recruitment landing page.</li>
+              <li>Implemented calculators, image sliders, and navigation with a focus on mobile-friendly UI/UX.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-label">03 — Projects</span>
+      <h2 class="section-title">Things I've shipped</h2>
+    </div>
+    <div class="section-body">
+      <div></div>
+      <div class="projects">
+
+        <div class="project">
+          <div class="project-top">
+            <h3 class="project-name">Agentic AI Data Analyst</h3>
+            <span class="project-stack">Python · Pandas · Streamlit · Plotly · LLMs</span>
+          </div>
+          <p class="project-desc">Converts natural-language questions into analysis plans, automated insights, and interactive charts — Pandas processing wired directly to uploaded datasets.</p>
+        </div>
+
+        <div class="project">
+          <div class="project-top">
+            <h3 class="project-name">Lifelink — AI &amp; IoT Health Monitoring</h3>
+            <span class="project-stack">ESP32 · ML · IoT</span>
+          </div>
+          <p class="project-desc">A wearable built on ESP32, MAX30102, MPU6050, and GPS for real-time heart rate, SpO₂, motion, and location tracking, with ML-based fall detection, emergency alerts, medication reminders, and multilingual health reports. Explored Edge AI for low-latency processing when connectivity drops.</p>
+        </div>
+
+        <div class="project">
+          <div class="project-top">
+            <h3 class="project-name">Traffic Signal Optimizer</h3>
+            <span class="project-stack">Python · OpenCV · Computer Vision</span>
+          </div>
+          <p class="project-desc">Processes live traffic footage to detect and count vehicles per lane, then adjusts signal timing dynamically based on lane-wise density.</p>
+        </div>
+
+        <div class="project">
+          <div class="project-top">
+            <h3 class="project-name">Consumer Insights Dashboard</h3>
+            <span class="project-stack">Python · Pandas · Plotly · Streamlit</span>
+          </div>
+          <p class="project-desc">An interactive e-commerce dashboard covering sales, customer behavior, and product performance, built on cleaned and explored transaction data.</p>
+        </div>
+
+        <div class="project">
+          <div class="project-top">
+            <h3 class="project-name">Binance Futures Trading Bot</h3>
+            <span class="project-stack">Python · Binance API · Gradio</span>
+          </div>
+          <p class="project-desc">An automated trading app on the Binance Futures Testnet handling market, limit, and stop-limit orders, with real-time execution, JSON order history, and secure API and error handling.</p>
+        </div>
+
+        <div class="project">
+          <div class="project-top">
+            <h3 class="project-name">US Traffic Accident Analysis</h3>
+            <span class="project-stack">Python · Pandas · Plotly</span>
+          </div>
+          <p class="project-desc">Analyzed US accident records across time, location, weather, and road conditions to find rush-hour and adverse-weather patterns, rendered as an interactive heatmap of hotspots.</p>
+        </div>
+
+        <div class="project">
+          <div class="project-top">
+            <h3 class="project-name">Trader Behavior Insights</h3>
+            <span class="project-stack">Power BI · Python</span>
+          </div>
+          <p class="project-desc">Compared 80K+ trades against the Bitcoin Fear &amp; Greed Index to study sentiment-driven trading, leverage, and PnL, surfaced in a dynamic Power BI dashboard.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-label">04 — Skills</span>
+      <h2 class="section-title">Tools I reach for</h2>
+    </div>
+    <div class="section-body">
+      <div></div>
+      <div class="skills-grid">
+        <div class="skill-cat">
+          <h4>Programming</h4>
+          <p>Python, JavaScript, SQL</p>
+        </div>
+        <div class="skill-cat">
+          <h4>AI / ML / Data Science</h4>
+          <p>Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn, ARIMA, SARIMA, Prophet, LSTM, Gradio, Power BI</p>
+        </div>
+        <div class="skill-cat">
+          <h4>Web Development</h4>
+          <p>HTML5, CSS3, Responsive UI/UX, APIs</p>
+        </div>
+        <div class="skill-cat">
+          <h4>Databases</h4>
+          <p>SQL, Firebase</p>
+        </div>
+        <div class="skill-cat">
+          <h4>Cloud &amp; Deployment</h4>
+          <p>Streamlit, Gradio, Hugging Face Spaces, Firebase Hosting</p>
+        </div>
+        <div class="skill-cat">
+          <h4>Tools &amp; Platforms</h4>
+          <p>Git/GitHub, Figma, VS Code, Jupyter Notebook, Hugging Face, Google Colab, Vercel</p>
+        </div>
+        <div class="skill-cat">
+          <h4>Working style</h4>
+          <p>Team leadership, public speaking, technical writing, hackathon collaboration</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="achievements">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-label">05 — Recognition</span>
+      <h2 class="section-title">Achievements</h2>
+    </div>
+    <div class="section-body">
+      <div></div>
+      <div class="achieve-list">
+        <div class="achieve">
+          <div class="achieve-year">2025</div>
+          <div>
+            <p class="achieve-title">HR &amp; Team Affairs Lead, ED Cell — SGBIT</p>
+            <p class="achieve-detail">Led HR and team affairs for the entrepreneurship development cell.</p>
+          </div>
+        </div>
+        <div class="achieve">
+          <div class="achieve-year">2025</div>
+          <div>
+            <p class="achieve-title">4th position, national-level hackathon</p>
+            <p class="achieve-detail">Organized by Ballary Institute of Technology.</p>
+          </div>
+        </div>
+        <div class="achieve">
+          <div class="achieve-year">—</div>
+          <div>
+            <p class="achieve-title">IEEE Women in Engineering Scholarship</p>
+            <p class="achieve-detail">₹50,000 scholarship, awarded for academic potential and commitment to technology.</p>
+          </div>
+        </div>
+        <div class="achieve">
+          <div class="achieve-year">—</div>
+          <div>
+            <p class="achieve-title">AIFT Scholarship</p>
+            <p class="achieve-detail">₹27,000 scholarship supporting academic and professional development.</p>
+          </div>
+        </div>
+        <div class="achieve">
+          <div class="achieve-year">—</div>
+          <div>
+            <p class="achieve-title">4+ national-level hackathons</p>
+            <p class="achieve-detail">Hands-on experience in rapid prototyping, teamwork, and problem-solving under time pressure.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="certifications">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-label">06 — Certifications</span>
+      <h2 class="section-title">Courses &amp; job simulations</h2>
+    </div>
+    <div class="section-body">
+      <div></div>
+      <div class="cert-grid">
+
+        <div class="cert-card">
+          <span class="cert-seal"></span>
+          <p class="cert-id">CERT / 01</p>
+          <p class="cert-name">GenAI Powered Data Analytics Job Simulation</p>
+          <p class="cert-issuer">Tata, via Forage</p>
+        </div>
+
+        <div class="cert-card">
+          <span class="cert-seal"></span>
+          <p class="cert-id">CERT / 02</p>
+          <p class="cert-name">Data Analytics Job Simulation</p>
+          <p class="cert-issuer">Deloitte</p>
+        </div>
+
+        <div class="cert-card">
+          <span class="cert-seal"></span>
+          <p class="cert-id">CERT / 03</p>
+          <p class="cert-name">Data Visualisation: Empowering Business with Effective Insights</p>
+          <p class="cert-issuer">Tata, via Forage</p>
+        </div>
+
+        <div class="cert-card">
+          <span class="cert-seal"></span>
+          <p class="cert-id">CERT / 04</p>
+          <p class="cert-name">Cyber Security Analyst Job Simulation</p>
+          <p class="cert-issuer">TATA</p>
+        </div>
+
+        <div class="cert-card">
+          <span class="cert-seal"></span>
+          <p class="cert-id">CERT / 05</p>
+          <p class="cert-name">MakeInBelagavi 2025</p>
+          <p class="cert-issuer">Participant</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="education" style="border-bottom:none;">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-label">07 — Education</span>
+      <h2 class="section-title">Coursework</h2>
+    </div>
+    <div class="section-body">
+      <div></div>
+      <div class="edu-list">
+        <div class="edu">
+          <div class="edu-date">2023 – Present</div>
+          <div>
+            <p class="edu-name">B.E., Computer Science &amp; Business Systems</p>
+            <p class="edu-detail">S G Balekundri Institute of Technology, Belgaum — CGPA 8.56 (through 6th semester)</p>
+          </div>
+        </div>
+        <div class="edu">
+          <div class="edu-date">2021 – 2023</div>
+          <div>
+            <p class="edu-name">PUC — PCMB</p>
+            <p class="edu-detail">R L PU College of Science, Belgaum — 86.83%</p>
+          </div>
+        </div>
+        <div class="edu">
+          <div class="edu-date">2009 – 2021</div>
+          <div>
+            <p class="edu-name">SSLC</p>
+            <p class="edu-detail">Divine Providence Convent High School, Belgaum — 83.52%</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2 class="footer-title">Let's talk about your data.</h2>
+    <div class="footer-links">
+      <a href="mailto:vaishnavihidadugi@gmail.com">vaishnavihidadugi@gmail.com</a>
+      <a href="tel:7483235284">7483235284</a>
+      <a href="https://linkedin.com/in/vaishnavi-hidadugi-4771b72a7" target="_blank" rel="noopener">linkedin.com/in/vaishnavi-hidadugi</a>
+      <a href="https://github.com/vaishnavihidadugi" target="_blank" rel="noopener">github.com/vaishnavihidadugi</a>
+    </div>
+    <div class="footer-bottom">
+      <span>Belgaum, Karnataka 590001</span>
+      <span>Vaishnavi Hidadugi — Portfolio</span>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  (function(){
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+
+    var targets = document.querySelectorAll(
+      '.section-head, .job, .project, .achieve, .edu, .about-text, .skills-grid, .cert-grid, .footer-title'
+    );
+
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+    targets.forEach(function(t){ io.observe(t); });
+  })();
+</script>
+</body>
+</html>
